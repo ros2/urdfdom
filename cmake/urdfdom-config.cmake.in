@@ -7,15 +7,34 @@ set(@PKG_NAME@_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/include" "@TinyXML_INCLUDE_D
 
 foreach(lib @PKG_LIBRARIES@)
   set(onelib "${lib}-NOTFOUND")
+  set(onelibd "${lib}-NOTFOUND")
   find_library(onelib ${lib}
       PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
     NO_DEFAULT_PATH
     )
-  if(NOT onelib)
+  find_library(onelibd ${lib}@CMAKE_DEBUG_POSTFIX@
+      PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
+    NO_DEFAULT_PATH
+    )
+  if(onelib-NOTFOUND AND onelibd-NOTFOUND)
     message(FATAL_ERROR "Library '${lib}' in package @PKG_NAME@ is not installed properly")
   endif()
-  list(APPEND @PKG_NAME@_LIBRARIES ${onelib})
+  if (onelib)
+    message("Adding release lib: ${onelib}")
+    list(APPEND @PKG_NAME@_RELEASE_LIBRARIES ${onelib})
+  endif()
+  if (onelibd)
+    message("Adding debug lib: ${onelibd}")
+    list(APPEND @PKG_NAME@_DEBUG_LIBRARIES ${onelibd})
+  endif()
 endforeach()
+if(@PKG_NAME@_RELEASE_LIBRARIES)
+  list(APPEND @PKG_NAME@_LIBRARIES optimized ${@PKG_NAME@_RELEASE_LIBRARIES})
+endif()
+if (@PKG_NAME@_DEBUG_LIBRARIES)
+  list(APPEND @PKG_NAME@_LIBRARIES debug ${@PKG_NAME@_DEBUG_LIBRARIES})
+endif()
+message("URDFDOM Libraries: ${@PKG_NAME@_LIBRARIES}")
 
 
 foreach(dep @PKG_DEPENDS@)
