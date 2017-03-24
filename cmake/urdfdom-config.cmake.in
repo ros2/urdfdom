@@ -9,20 +9,18 @@ foreach(lib @PKG_LIBRARIES@)
   set(onelib "${lib}-NOTFOUND")
   set(onelibd "${lib}-NOTFOUND")
   find_library(onelib ${lib}
-      PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
-    NO_DEFAULT_PATH
-    )
+    PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
+    NO_DEFAULT_PATH)
   find_library(onelibd ${lib}@CMAKE_DEBUG_POSTFIX@
-      PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
-    NO_DEFAULT_PATH
-    )
+    PATHS "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@"
+    NO_DEFAULT_PATH)
   if(onelib-NOTFOUND AND onelibd-NOTFOUND)
     message(FATAL_ERROR "Library '${lib}' in package @PKG_NAME@ is not installed properly")
   endif()
-  if (onelib)
+  if(onelib)
     list(APPEND @PKG_NAME@_LIBRARIES optimized ${onelib})
   endif()
-  if (onelibd)
+  if(onelibd)
     list(APPEND @PKG_NAME@_LIBRARIES debug ${onelibd})
   endif()
 endforeach()
