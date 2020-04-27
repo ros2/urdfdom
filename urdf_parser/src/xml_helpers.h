@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
-*  Copyright (c) 2008, Willow Garage, Inc.
+*
+*  Copyright (c) 2020 Rover Robotics c/o Dan Rose
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -32,39 +32,12 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Wim Meeussen */
+#ifndef ROS2_MASTER_XML_HELPERS_HPP
+#define ROS2_MASTER_XML_HELPERS_HPP
 
-#include <console_bridge/console.h>
 #include <tinyxml2.h>
-#include <urdf_model/model.h>
-#include <urdf_parser/urdf_parser.h>
-#include <urdf_world/world.h>
-
-#include <algorithm>
-#include <fstream>
-#include <sstream>
-
-#include "xml_helpers.h"
-
-namespace urdf{
-
-bool parseWorld(World &/*world*/, TiXmlElement* /*config*/)
+namespace urdf
 {
-
-  // to be implemented
-
-  return true;
+  tinyxml2::XMLElement * xmlAppendChild(tinyxml2::XMLNode * parent, const char * new_tag);
 }
-
-bool exportWorld(World &world, TiXmlElement* xml)
-{
-  auto world_xml = xmlAppendChild(xml, "world");
-  world_xml->SetAttribute("name", world.name.c_str());
-
-  // to be implemented
-  // exportModels(*world.models, world_xml);
-
-  return true;
-}
-
-}
+#endif  //ROS2_MASTER_XML_HELPERS_HPP

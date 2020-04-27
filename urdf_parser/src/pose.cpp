@@ -40,8 +40,10 @@
 #include <sstream>
 #include <algorithm>
 #include <console_bridge/console.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_parser/urdf_parser.h>
+
+#include "xml_helpers.h"
 
 namespace urdf_export_helpers {
 
@@ -78,10 +80,6 @@ std::string values2str(urdf::Color c)
     rgba[2] = c.b;
     rgba[3] = c.a;
     return values2str(4, rgba);
-}
-std::string values2str(double d)
-{
-    return values2str(1, &d);
 }
 }
 
@@ -121,12 +119,11 @@ bool parsePose(Pose &pose, TiXmlElement* xml)
 
 bool exportPose(Pose &pose, TiXmlElement* xml)
 {
-  TiXmlElement *origin = new TiXmlElement("origin");
+  auto * origin = xmlAppendChild(xml,"origin");
   std::string pose_xyz_str = urdf_export_helpers::values2str(pose.position);
   std::string pose_rpy_str = urdf_export_helpers::values2str(pose.rotation);
-  origin->SetAttribute("xyz", pose_xyz_str);
-  origin->SetAttribute("rpy", pose_rpy_str);
-  xml->LinkEndChild(origin);
+  origin->SetAttribute("xyz", pose_xyz_str.c_str());
+  origin->SetAttribute("rpy", pose_rpy_str.c_str());
   return true;
 }
 

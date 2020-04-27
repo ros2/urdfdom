@@ -32,9 +32,9 @@ endif (MSVC OR MSVC90 OR MSVC10)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-find_package(tinyxml_vendor REQUIRED)
-find_package(TinyXML REQUIRED)
-include_directories(SYSTEM ${TinyXML_INCLUDE_DIRS})
+find_package(tinyxml2_vendor REQUIRED)
+find_package(TinyXML2 REQUIRED)
+include_directories(SYSTEM ${TinyXML2_INCLUDE_DIRS})
 
 find_package(urdfdom_headers 1.0 REQUIRED)
 include_directories(SYSTEM ${urdfdom_headers_INCLUDE_DIRS})

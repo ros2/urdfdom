@@ -34,10 +34,13 @@
 
 /* Author: Wim Meeussen */
 
-#include <vector>
-#include "urdf_parser/urdf_parser.h"
 #include <console_bridge/console.h>
+
 #include <fstream>
+#include <vector>
+
+#include "urdf_parser/urdf_parser.h"
+#include "xml_helpers.h"
 
 namespace urdf{
 
@@ -68,7 +71,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   xml_doc.Parse(xml_string.c_str());
   if (xml_doc.Error())
   {
-    CONSOLE_BRIDGE_logError(xml_doc.ErrorDesc());
+    CONSOLE_BRIDGE_logError(xml_doc.ErrorStr());
     xml_doc.ClearError();
     model.reset();
     return model;
@@ -248,11 +251,8 @@ bool exportJoint(Joint &joint, TiXmlElement *config);
 TiXmlDocument*  exportURDF(const ModelInterface &model)
 {
   TiXmlDocument *doc = new TiXmlDocument();
-
-  TiXmlElement *robot = new TiXmlElement("robot");
-  robot->SetAttribute("name", model.name_);
-  doc->LinkEndChild(robot);
-
+  auto robot = xmlAppendChild(doc, "robot");
+  robot->SetAttribute("name", model.name_.c_str());
 
   for (std::map<std::string, MaterialSharedPtr>::const_iterator m=model.materials_.begin(); m!=model.materials_.end(); m++)
   {

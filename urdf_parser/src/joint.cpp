@@ -34,13 +34,16 @@
 
 /* Author: John Hsu */
 
+#include <console_bridge/console.h>
+#include <tinyxml2.h>
+#include <urdf_model/joint.h>
+#include <urdf_parser/urdf_parser.h>
+
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <urdf_model/joint.h>
-#include <console_bridge/console.h>
-#include <tinyxml.h>
-#include <urdf_parser/urdf_parser.h>
+
+#include "xml_helpers.h"
 
 namespace urdf{
 
@@ -639,32 +642,29 @@ bool exportPose(Pose &pose, TiXmlElement* xml);
 
 bool exportJointDynamics(JointDynamics &jd, TiXmlElement* xml)
 {
-  TiXmlElement *dynamics_xml = new TiXmlElement("dynamics");
-  dynamics_xml->SetAttribute("damping", urdf_export_helpers::values2str(jd.damping) );
-  dynamics_xml->SetAttribute("friction", urdf_export_helpers::values2str(jd.friction) );
-  xml->LinkEndChild(dynamics_xml);
+  auto * dynamics_xml = xmlAppendChild(xml, "dynamics");
+  dynamics_xml->SetAttribute("damping", jd.damping );
+  dynamics_xml->SetAttribute("friction", jd.friction );
   return true;
 }
 
 bool exportJointLimits(JointLimits &jl, TiXmlElement* xml)
 {
-  TiXmlElement *limit_xml = new TiXmlElement("limit");
-  limit_xml->SetAttribute("effort", urdf_export_helpers::values2str(jl.effort) );
-  limit_xml->SetAttribute("velocity", urdf_export_helpers::values2str(jl.velocity) );
-  limit_xml->SetAttribute("lower", urdf_export_helpers::values2str(jl.lower) );
-  limit_xml->SetAttribute("upper", urdf_export_helpers::values2str(jl.upper) );
-  xml->LinkEndChild(limit_xml);
+  auto * limit_xml = xmlAppendChild(xml, "limit");
+  limit_xml->SetAttribute("effort", jl.effort);
+  limit_xml->SetAttribute("velocity", jl.velocity );
+  limit_xml->SetAttribute("lower", jl.lower );
+  limit_xml->SetAttribute("upper", jl.upper );
   return true;
 }
 
 bool exportJointSafety(JointSafety &js, TiXmlElement* xml)
 {
-  TiXmlElement *safety_xml = new TiXmlElement("safety_controller");
-  safety_xml->SetAttribute("k_position", urdf_export_helpers::values2str(js.k_position) );
-  safety_xml->SetAttribute("k_velocity", urdf_export_helpers::values2str(js.k_velocity) );
-  safety_xml->SetAttribute("soft_lower_limit", urdf_export_helpers::values2str(js.soft_lower_limit) );
-  safety_xml->SetAttribute("soft_upper_limit", urdf_export_helpers::values2str(js.soft_upper_limit) );
-  xml->LinkEndChild(safety_xml);
+  auto * safety_xml = xmlAppendChild(xml, "safety_controller");
+  safety_xml->SetAttribute("k_position", js.k_position );
+  safety_xml->SetAttribute("k_velocity", js.k_velocity );
+  safety_xml->SetAttribute("soft_lower_limit", js.soft_lower_limit );
+  safety_xml->SetAttribute("soft_upper_limit", js.soft_upper_limit );
   return true;
 }
 
@@ -672,13 +672,12 @@ bool exportJointCalibration(JointCalibration &jc, TiXmlElement* xml)
 {
   if (jc.falling || jc.rising)
   {
-    TiXmlElement *calibration_xml = new TiXmlElement("calibration");
+    auto * calibration_xml = xmlAppendChild(xml, "calibration");
     if (jc.falling)
-      calibration_xml->SetAttribute("falling", urdf_export_helpers::values2str(*jc.falling) );
+      calibration_xml->SetAttribute("falling", *jc.falling );
     if (jc.rising)
-      calibration_xml->SetAttribute("rising", urdf_export_helpers::values2str(*jc.rising) );
+      calibration_xml->SetAttribute("rising", *jc.rising );
     //calibration_xml->SetAttribute("reference_position", urdf_export_helpers::values2str(jc.reference_position) );
-    xml->LinkEndChild(calibration_xml);
   }
   return true;
 }
@@ -687,19 +686,20 @@ bool exportJointMimic(JointMimic &jm, TiXmlElement* xml)
 {
   if (!jm.joint_name.empty())
   {
-    TiXmlElement *mimic_xml = new TiXmlElement("mimic");
-    mimic_xml->SetAttribute("offset", urdf_export_helpers::values2str(jm.offset) );
-    mimic_xml->SetAttribute("multiplier", urdf_export_helpers::values2str(jm.multiplier) );
-    mimic_xml->SetAttribute("joint", jm.joint_name );
-    xml->LinkEndChild(mimic_xml);
+    auto * mimic_xml = xmlAppendChild(xml, "mimic");
+
+    mimic_xml->SetAttribute("offset", jm.offset );
+    mimic_xml->SetAttribute("multiplier", jm.multiplier );
+    mimic_xml->SetAttribute("joint", jm.joint_name.c_str() );
   }
   return true;
 }
 
 bool exportJoint(Joint &joint, TiXmlElement* xml)
 {
-  TiXmlElement * joint_xml = new TiXmlElement("joint");
-  joint_xml->SetAttribute("name", joint.name);
+  auto * joint_xml = xmlAppendChild(xml, "joint");
+
+  joint_xml->SetAttribute("name", joint.name.c_str());
   if (joint.type == urdf::Joint::PLANAR)
     joint_xml->SetAttribute("type", "planar");
   else if (joint.type == urdf::Joint::FLOATING)
@@ -719,19 +719,16 @@ bool exportJoint(Joint &joint, TiXmlElement* xml)
   exportPose(joint.parent_to_joint_origin_transform, joint_xml);
 
   // axis
-  TiXmlElement * axis_xml = new TiXmlElement("axis");
-  axis_xml->SetAttribute("xyz", urdf_export_helpers::values2str(joint.axis));
-  joint_xml->LinkEndChild(axis_xml);
+  auto * axis_xml = xmlAppendChild(joint_xml, "axis");
+  axis_xml->SetAttribute("xyz", urdf_export_helpers::values2str(joint.axis).c_str());
 
-  // parent 
-  TiXmlElement * parent_xml = new TiXmlElement("parent");
-  parent_xml->SetAttribute("link", joint.parent_link_name);
-  joint_xml->LinkEndChild(parent_xml);
+  // parent
+  auto * parent_xml = xmlAppendChild(joint_xml, "parent");
+  parent_xml->SetAttribute("link", joint.parent_link_name.c_str());
 
   // child
-  TiXmlElement * child_xml = new TiXmlElement("child");
-  child_xml->SetAttribute("link", joint.child_link_name);
-  joint_xml->LinkEndChild(child_xml);
+  auto * child_xml = xmlAppendChild(joint_xml, "child");
+  child_xml->SetAttribute("link", joint.child_link_name.c_str());
 
   if (joint.dynamics)
     exportJointDynamics(*(joint.dynamics), joint_xml);
@@ -744,7 +741,6 @@ bool exportJoint(Joint &joint, TiXmlElement* xml)
   if (joint.mimic)
     exportJointMimic(*(joint.mimic), joint_xml);
 
-  xml->LinkEndChild(joint_xml);
   return true;
 }
 
