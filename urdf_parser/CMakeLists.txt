@@ -4,6 +4,7 @@ add_library(urdfdom_model SHARED
   src/link.cpp
   src/joint.cpp)
 target_include_directories(urdfdom_model PUBLIC
+  ${TinyXML_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_model PUBLIC
@@ -15,6 +16,7 @@ set_target_properties(urdfdom_model PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERS
 add_library(urdfdom_world SHARED
   src/world.cpp)
 target_include_directories(urdfdom_world PUBLIC
+  ${TinyXML_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_world PUBLIC
@@ -26,6 +28,7 @@ set_target_properties(urdfdom_world PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERS
 
 add_library(urdfdom_sensor SHARED src/urdf_sensor.cpp)
 target_include_directories(urdfdom_sensor PUBLIC
+  ${TinyXML_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_sensor PUBLIC
@@ -39,6 +42,7 @@ add_library(urdfdom_model_state SHARED
   src/urdf_model_state.cpp
   src/twist.cpp)
 target_include_directories(urdfdom_model_state PUBLIC
+  ${TinyXML_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_model_state
