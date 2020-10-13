@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2008, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -113,7 +113,7 @@ bool parseCamera(Camera &camera, TiXmlElement* config)
     {
       CONSOLE_BRIDGE_logError("Camera sensor needs an image format attribute");
       return false;
-    }    
+    }
 
     const char* hfov_char = image->Attribute("hfov");
     if (hfov_char)
@@ -186,7 +186,7 @@ bool parseCamera(Camera &camera, TiXmlElement* config)
       CONSOLE_BRIDGE_logError("Camera sensor needs an image far attribute");
       return false;
     }
-    
+
   }
   else
   {
@@ -240,8 +240,8 @@ bool parseRay(Ray &ray, TiXmlElement* config)
         CONSOLE_BRIDGE_logError("Ray horizontal resolution [%s] is out of range: %s", resolution_char, e.what());
         return false;
       }
-    }   
-    
+    }
+
     const char* min_angle_char = horizontal->Attribute("min_angle");
     if (min_angle_char)
     {
@@ -280,7 +280,7 @@ bool parseRay(Ray &ray, TiXmlElement* config)
       }
     }
   }
-  
+
   TiXmlElement *vertical = config->FirstChildElement("vertical");
   if (vertical)
   {
@@ -320,8 +320,8 @@ bool parseRay(Ray &ray, TiXmlElement* config)
         CONSOLE_BRIDGE_logError("Ray vertical resolution [%s] is out of range: %s", resolution_char, e.what());
         return false;
       }
-    }   
-    
+    }
+
     const char* min_angle_char = vertical->Attribute("min_angle");
     if (min_angle_char)
     {
@@ -429,5 +429,3 @@ bool parseSensor(Sensor &sensor, TiXmlElement* config)
 
 
 }
-
-

@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software Ligcense Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2008, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -389,14 +389,14 @@ bool parseJointMimic(JointMimic &jm, TiXmlElement* config)
   }
   else
     jm.joint_name = joint_name_str;
-  
+
   // Get mimic multiplier
   const char* multiplier_str = config->Attribute("multiplier");
 
   if (multiplier_str == NULL)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_mimic: no multiplier, using default value of 1");
-    jm.multiplier = 1;    
+    jm.multiplier = 1;
   }
   else
   {
@@ -416,7 +416,7 @@ bool parseJointMimic(JointMimic &jm, TiXmlElement* config)
     }
   }
 
-  
+
   // Get mimic offset
   const char* offset_str = config->Attribute("offset");
   if (offset_str == NULL)
@@ -512,7 +512,7 @@ bool parseJoint(Joint &joint, TiXmlElement* config)
     CONSOLE_BRIDGE_logError("joint [%s] has no type, check to see if it's a reference.", joint.name.c_str());
     return false;
   }
-  
+
   std::string type_str = type_char;
   if (type_str == "planar")
     joint.type = Joint::PLANAR;
@@ -574,7 +574,7 @@ bool parseJoint(Joint &joint, TiXmlElement* config)
   }
   else if (joint.type == Joint::PRISMATIC)
   {
-    CONSOLE_BRIDGE_logError("Joint [%s] is of type PRISMATIC without limits", joint.name.c_str()); 
+    CONSOLE_BRIDGE_logError("Joint [%s] is of type PRISMATIC without limits", joint.name.c_str());
     return false;
   }
 
@@ -723,7 +723,7 @@ bool exportJoint(Joint &joint, TiXmlElement* xml)
   axis_xml->SetAttribute("xyz", urdf_export_helpers::values2str(joint.axis));
   joint_xml->LinkEndChild(axis_xml);
 
-  // parent 
+  // parent
   TiXmlElement * parent_xml = new TiXmlElement("parent");
   parent_xml->SetAttribute("link", joint.parent_link_name);
   joint_xml->LinkEndChild(parent_xml);

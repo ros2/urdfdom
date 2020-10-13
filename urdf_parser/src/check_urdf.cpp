@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2008, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -35,6 +35,7 @@
 /* Author: Wim Meeussen */
 
 #include "urdf_parser/urdf_parser.h"
+
 #include <iostream>
 #include <fstream>
 
@@ -42,7 +43,7 @@ using namespace urdf;
 
 void printTree(LinkConstSharedPtr link,int level = 0)
 {
-  level+=2;
+  level += 2;
   int count = 0;
   for (std::vector<LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
   {
@@ -59,9 +60,7 @@ void printTree(LinkConstSharedPtr link,int level = 0)
       std::cout << "root link: " << link->name << " has a null child!" << *child << std::endl;
     }
   }
-
 }
-
 
 int main(int argc, char** argv)
 {
@@ -72,10 +71,9 @@ int main(int argc, char** argv)
 
   std::string xml_string;
   std::fstream xml_file(argv[1], std::fstream::in);
-  while ( xml_file.good() )
-  {
+  while (xml_file.good()) {
     std::string line;
-    std::getline( xml_file, line);
+    std::getline(xml_file, line);
     xml_string += (line + "\n");
   }
   xml_file.close();
@@ -95,9 +93,7 @@ int main(int argc, char** argv)
 
   std::cout << "root Link: " << root_link->name << " has " << root_link->child_links.size() << " child(ren)" << std::endl;
 
-
   // print entire tree
   printTree(root_link);
   return 0;
 }
-

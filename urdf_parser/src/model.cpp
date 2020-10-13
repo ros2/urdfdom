@@ -1,13 +1,13 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
-* 
+*
 *  Copyright (c) 2008, Willow Garage, Inc.
 *  All rights reserved.
-* 
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
-* 
+*
 *   * Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   * Redistributions in binary form must reproduce the above
@@ -17,7 +17,7 @@
 *   * Neither the name of the Willow Garage nor the names of its
 *     contributors may be used to endorse or promote products derived
 *     from this software without specific prior written permission.
-* 
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -216,7 +216,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   parent_link_tree.clear();
 
   // building tree: name mapping
-  try 
+  try
   {
     model->initTree(parent_link_tree);
   }
@@ -238,7 +238,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
     model.reset();
     return model;
   }
-  
+
   return model;
 }
 
@@ -260,13 +260,13 @@ TiXmlDocument*  exportURDF(const ModelInterface &model)
     exportMaterial(*(m->second), robot);
   }
 
-  for (std::map<std::string, LinkSharedPtr>::const_iterator l=model.links_.begin(); l!=model.links_.end(); l++)  
+  for (std::map<std::string, LinkSharedPtr>::const_iterator l=model.links_.begin(); l!=model.links_.end(); l++)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom: exporting link [%s]\n",l->second->name.c_str());
     exportLink(*(l->second), robot);
   }
-  	
-  for (std::map<std::string, JointSharedPtr>::const_iterator j=model.joints_.begin(); j!=model.joints_.end(); j++)  
+
+  for (std::map<std::string, JointSharedPtr>::const_iterator j=model.joints_.begin(); j!=model.joints_.end(); j++)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom: exporting joint [%s]\n",j->second->name.c_str());
     exportJoint(*(j->second), robot);
@@ -274,7 +274,7 @@ TiXmlDocument*  exportURDF(const ModelInterface &model)
 
   return doc;
 }
-    
+
 TiXmlDocument*  exportURDF(ModelInterfaceSharedPtr &model)
 {
   return exportURDF(*model);
@@ -282,4 +282,3 @@ TiXmlDocument*  exportURDF(ModelInterfaceSharedPtr &model)
 
 
 }
-
