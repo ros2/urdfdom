@@ -93,7 +93,7 @@ bool parsePose(Pose &pose, TiXmlElement* xml)
   if (xml)
   {
     const char* xyz_str = xml->Attribute("xyz");
-    if (xyz_str != NULL)
+    if (xyz_str != nullptr)
     {
       try {
         pose.position.init(xyz_str);
@@ -105,7 +105,7 @@ bool parsePose(Pose &pose, TiXmlElement* xml)
     }
 
     const char* rpy_str = xml->Attribute("rpy");
-    if (rpy_str != NULL)
+    if (rpy_str != nullptr)
     {
       try {
         pose.rotation.init(rpy_str);

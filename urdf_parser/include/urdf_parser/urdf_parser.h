@@ -50,7 +50,7 @@
 
 namespace urdf_export_helpers {
 
-URDFDOM_DLLAPI std::string values2str(unsigned int count, const double *values, double (*conv)(double) = NULL);
+URDFDOM_DLLAPI std::string values2str(unsigned int count, const double *values, double (*conv)(double) = nullptr);
 URDFDOM_DLLAPI std::string values2str(urdf::Vector3 vec);
 URDFDOM_DLLAPI std::string values2str(urdf::Rotation rot);
 URDFDOM_DLLAPI std::string values2str(urdf::Color c);

@@ -50,7 +50,7 @@ bool parseTwist(Twist &twist, TiXmlElement* xml)
   if (xml)
   {
     const char* linear_char = xml->Attribute("linear");
-    if (linear_char != NULL)
+    if (linear_char != nullptr)
     {
       try {
         twist.linear.init(linear_char);
@@ -63,7 +63,7 @@ bool parseTwist(Twist &twist, TiXmlElement* xml)
     }
 
     const char* angular_char = xml->Attribute("angular");
-    if (angular_char != NULL)
+    if (angular_char != nullptr)
     {
       try {
         twist.angular.init(angular_char);

@@ -52,7 +52,7 @@ bool parseJointDynamics(JointDynamics &jd, TiXmlElement* config)
 
   // Get joint damping
   const char* damping_str = config->Attribute("damping");
-  if (damping_str == NULL){
+  if (damping_str == nullptr){
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_dynamics: no damping, defaults to 0");
     jd.damping = 0;
   }
@@ -76,7 +76,7 @@ bool parseJointDynamics(JointDynamics &jd, TiXmlElement* config)
 
   // Get joint friction
   const char* friction_str = config->Attribute("friction");
-  if (friction_str == NULL){
+  if (friction_str == nullptr){
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_dynamics: no friction, defaults to 0");
     jd.friction = 0;
   }
@@ -98,7 +98,7 @@ bool parseJointDynamics(JointDynamics &jd, TiXmlElement* config)
     }
   }
 
-  if (damping_str == NULL && friction_str == NULL)
+  if (damping_str == nullptr && friction_str == nullptr)
   {
     CONSOLE_BRIDGE_logError("joint dynamics element specified with no damping and no friction");
     return false;
@@ -115,7 +115,7 @@ bool parseJointLimits(JointLimits &jl, TiXmlElement* config)
 
   // Get lower joint limit
   const char* lower_str = config->Attribute("lower");
-  if (lower_str == NULL){
+  if (lower_str == nullptr){
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_limit: no lower, defaults to 0");
     jl.lower = 0;
   }
@@ -139,7 +139,7 @@ bool parseJointLimits(JointLimits &jl, TiXmlElement* config)
 
   // Get upper joint limit
   const char* upper_str = config->Attribute("upper");
-  if (upper_str == NULL){
+  if (upper_str == nullptr){
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_limit: no upper, , defaults to 0");
     jl.upper = 0;
   }
@@ -163,7 +163,7 @@ bool parseJointLimits(JointLimits &jl, TiXmlElement* config)
 
   // Get joint effort limit
   const char* effort_str = config->Attribute("effort");
-  if (effort_str == NULL){
+  if (effort_str == nullptr){
     CONSOLE_BRIDGE_logError("joint limit: no effort");
     return false;
   }
@@ -187,7 +187,7 @@ bool parseJointLimits(JointLimits &jl, TiXmlElement* config)
 
   // Get joint velocity limit
   const char* velocity_str = config->Attribute("velocity");
-  if (velocity_str == NULL){
+  if (velocity_str == nullptr){
     CONSOLE_BRIDGE_logError("joint limit: no velocity");
     return false;
   }
@@ -218,7 +218,7 @@ bool parseJointSafety(JointSafety &js, TiXmlElement* config)
 
   // Get soft_lower_limit joint limit
   const char* soft_lower_limit_str = config->Attribute("soft_lower_limit");
-  if (soft_lower_limit_str == NULL)
+  if (soft_lower_limit_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_safety: no soft_lower_limit, using default value");
     js.soft_lower_limit = 0;
@@ -243,7 +243,7 @@ bool parseJointSafety(JointSafety &js, TiXmlElement* config)
 
   // Get soft_upper_limit joint limit
   const char* soft_upper_limit_str = config->Attribute("soft_upper_limit");
-  if (soft_upper_limit_str == NULL)
+  if (soft_upper_limit_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_safety: no soft_upper_limit, using default value");
     js.soft_upper_limit = 0;
@@ -268,7 +268,7 @@ bool parseJointSafety(JointSafety &js, TiXmlElement* config)
 
   // Get k_position_ safety "position" gain - not exactly position gain
   const char* k_position_str = config->Attribute("k_position");
-  if (k_position_str == NULL)
+  if (k_position_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_safety: no k_position, using default value");
     js.k_position = 0;
@@ -292,7 +292,7 @@ bool parseJointSafety(JointSafety &js, TiXmlElement* config)
   }
   // Get k_velocity_ safety velocity gain
   const char* k_velocity_str = config->Attribute("k_velocity");
-  if (k_velocity_str == NULL)
+  if (k_velocity_str == nullptr)
   {
     CONSOLE_BRIDGE_logError("joint safety: no k_velocity");
     return false;
@@ -324,7 +324,7 @@ bool parseJointCalibration(JointCalibration &jc, TiXmlElement* config)
 
   // Get rising edge position
   const char* rising_position_str = config->Attribute("rising");
-  if (rising_position_str == NULL)
+  if (rising_position_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_calibration: no rising, using default value");
     jc.rising.reset();
@@ -349,7 +349,7 @@ bool parseJointCalibration(JointCalibration &jc, TiXmlElement* config)
 
   // Get falling edge position
   const char* falling_position_str = config->Attribute("falling");
-  if (falling_position_str == NULL)
+  if (falling_position_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_calibration: no falling, using default value");
     jc.falling.reset();
@@ -382,7 +382,7 @@ bool parseJointMimic(JointMimic &jm, TiXmlElement* config)
   // Get name of joint to mimic
   const char* joint_name_str = config->Attribute("joint");
 
-  if (joint_name_str == NULL)
+  if (joint_name_str == nullptr)
   {
     CONSOLE_BRIDGE_logError("joint mimic: no mimic joint specified");
     return false;
@@ -393,7 +393,7 @@ bool parseJointMimic(JointMimic &jm, TiXmlElement* config)
   // Get mimic multiplier
   const char* multiplier_str = config->Attribute("multiplier");
 
-  if (multiplier_str == NULL)
+  if (multiplier_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_mimic: no multiplier, using default value of 1");
     jm.multiplier = 1;
@@ -419,7 +419,7 @@ bool parseJointMimic(JointMimic &jm, TiXmlElement* config)
 
   // Get mimic offset
   const char* offset_str = config->Attribute("offset");
-  if (offset_str == NULL)
+  if (offset_str == nullptr)
   {
     CONSOLE_BRIDGE_logDebug("urdfdom.joint_mimic: no offset, using default value of 0");
     jm.offset = 0;
