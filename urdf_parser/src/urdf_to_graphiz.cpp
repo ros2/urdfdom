@@ -108,12 +108,7 @@ int main(int argc, char ** argv)
   // print entire tree to file
   printTree(robot->getRoot(), output+".gv");
   std::cout << "Created file " << output << ".gv" << std::endl;
+  std::cout << "To view it as a PDF, run it through Graphviz.  On Linux, this would be 'dot -Tpdf " << output << ".gv' -o " << output << ".pdf" << std::endl;
 
-  std::string command = "dot -Tpdf "+output+".gv  -o "+output+".pdf";
-  if (system(command.c_str()) != -1) {
-    std::cout << "Created file " << output << ".pdf" << std::endl;
-  } else {
-    std::cout << "There was an error executing '" << command << "'" << std::endl;
-  }
   return 0;
 }
