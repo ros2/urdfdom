@@ -34,38 +34,34 @@
 
 /* Author: John Hsu */
 
-
 #include <console_bridge/console.h>
 #include <tinyxml.h>
+#include <urdf_exception/exception.h>
 #include <urdf_model/twist.h>
 
-namespace urdf{
+namespace urdf
+{
 
-bool parseTwist(Twist &twist, TiXmlElement* xml)
+bool parseTwist(Twist & twist, TiXmlElement * xml)
 {
   twist.clear();
-  if (xml)
-  {
-    const char* linear_char = xml->Attribute("linear");
-    if (linear_char != nullptr)
-    {
+  if (xml) {
+    const char * linear_char = xml->Attribute("linear");
+    if (linear_char != nullptr) {
       try {
         twist.linear.init(linear_char);
-      }
-      catch (const ParseError & e) {
+      } catch (const ParseError & e) {
         twist.linear.clear();
         CONSOLE_BRIDGE_logError("Malformed linear string [%s]: %s", linear_char, e.what());
         return false;
       }
     }
 
-    const char* angular_char = xml->Attribute("angular");
-    if (angular_char != nullptr)
-    {
+    const char * angular_char = xml->Attribute("angular");
+    if (angular_char != nullptr) {
       try {
         twist.angular.init(angular_char);
-      }
-      catch (const ParseError & e) {
+      } catch (const ParseError & e) {
         twist.angular.clear();
         CONSOLE_BRIDGE_logError("Malformed angular [%s]: %s", angular_char, e.what());
         return false;
@@ -75,7 +71,4 @@ bool parseTwist(Twist &twist, TiXmlElement* xml)
   return true;
 }
 
-}
-
-
-
+}  // namespace urdf

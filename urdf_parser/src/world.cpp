@@ -38,17 +38,17 @@
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_world/world.h>
 
-namespace urdf{
-
-bool parseWorld(World &/*world*/, TiXmlElement* /*config*/)
+namespace urdf
 {
 
+bool parseWorld(World &, TiXmlElement *)
+{
   // to be implemented
 
   return true;
 }
 
-bool exportWorld(World &world, TiXmlElement* xml)
+bool exportWorld(World & world, TiXmlElement * xml)
 {
   TiXmlElement * world_xml = new TiXmlElement("world");
   world_xml->SetAttribute("name", world.name);
@@ -61,4 +61,4 @@ bool exportWorld(World &world, TiXmlElement* xml)
   return true;
 }
 
-}
+}  // namespace urdf
