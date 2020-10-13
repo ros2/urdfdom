@@ -98,7 +98,7 @@ bool parsePose(Pose &pose, TiXmlElement* xml)
       try {
         pose.position.init(xyz_str);
       }
-      catch (ParseError &e) {
+      catch (const ParseError & e) {
         CONSOLE_BRIDGE_logError(e.what());
         return false;
       }
@@ -110,7 +110,7 @@ bool parsePose(Pose &pose, TiXmlElement* xml)
       try {
         pose.rotation.init(rpy_str);
       }
-      catch (ParseError &e) {
+      catch (const ParseError & e) {
         CONSOLE_BRIDGE_logError(e.what());
         return false;
       }

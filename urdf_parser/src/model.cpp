@@ -113,7 +113,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new material '%s'", material->name.c_str());
       }
     }
-    catch (ParseError &/*e*/) {
+    catch (const ParseError &) {
       CONSOLE_BRIDGE_logError("material xml is not initialized correctly");
       material.reset();
       model.reset();
@@ -169,7 +169,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
         CONSOLE_BRIDGE_logDebug("urdfdom: successfully added a new link '%s'", link->name.c_str());
       }
     }
-    catch (ParseError &/*e*/) {
+    catch (const ParseError &) {
       CONSOLE_BRIDGE_logError("link xml is not initialized correctly");
       model.reset();
       return model;
@@ -220,7 +220,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   {
     model->initTree(parent_link_tree);
   }
-  catch(ParseError &e)
+  catch(const ParseError & e)
   {
     CONSOLE_BRIDGE_logError("Failed to build tree: %s", e.what());
     model.reset();
@@ -232,7 +232,7 @@ ModelInterfaceSharedPtr  parseURDF(const std::string &xml_string)
   {
     model->initRoot(parent_link_tree);
   }
-  catch(ParseError &e)
+  catch(const ParseError & e)
   {
     CONSOLE_BRIDGE_logError("Failed to find root link: %s", e.what());
     model.reset();

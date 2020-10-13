@@ -85,7 +85,7 @@ bool parseMaterial(Material &material, TiXmlElement *config, bool only_name_is_o
         material.color.init(c->Attribute("rgba"));
         has_rgb = true;
       }
-      catch (ParseError &e) {
+      catch (const ParseError & e) {
         material.color.clear();
         CONSOLE_BRIDGE_logError(std::string("Material [" + material.name + "] has malformed color rgba values: " + e.what()).c_str());
       }
@@ -119,14 +119,14 @@ bool parseSphere(Sphere &s, TiXmlElement *c)
   {
     s.radius = std::stod(c->Attribute("radius"));
   }
-  catch (std::invalid_argument &e)
+  catch (const std::invalid_argument & e)
   {
     std::stringstream stm;
     stm << "radius [" << c->Attribute("radius") << "] is not a valid float: " << e.what();
     CONSOLE_BRIDGE_logError(stm.str().c_str());
     return false;
   }
-  catch (std::out_of_range &e)
+  catch (const std::out_of_range & e)
   {
     std::stringstream stm;
     stm << "radius [" << c->Attribute("radius") << "] is out of range: " << e.what();
@@ -151,7 +151,7 @@ bool parseBox(Box &b, TiXmlElement *c)
   {
     b.dim.init(c->Attribute("size"));
   }
-  catch (ParseError &e)
+  catch (const ParseError & e)
   {
     b.dim.clear();
     CONSOLE_BRIDGE_logError(e.what());
@@ -176,14 +176,14 @@ bool parseCylinder(Cylinder &y, TiXmlElement *c)
   {
     y.length = std::stod(c->Attribute("length"));
   }
-  catch (std::invalid_argument &/*e*/)
+  catch (const std::invalid_argument &)
   {
     std::stringstream stm;
     stm << "length [" << c->Attribute("length") << "] is not a valid float";
     CONSOLE_BRIDGE_logError(stm.str().c_str());
     return false;
   }
-  catch (std::out_of_range &/*e*/)
+  catch (const std::out_of_range &)
   {
     std::stringstream stm;
     stm << "length [" << c->Attribute("length") << "] is out of range";
@@ -195,14 +195,14 @@ bool parseCylinder(Cylinder &y, TiXmlElement *c)
   {
     y.radius = std::stod(c->Attribute("radius"));
   }
-  catch (std::invalid_argument &/*e*/)
+  catch (const std::invalid_argument &)
   {
     std::stringstream stm;
     stm << "radius [" << c->Attribute("radius") << "] is not a valid float";
     CONSOLE_BRIDGE_logError(stm.str().c_str());
     return false;
   }
-  catch (std::out_of_range &/*e*/)
+  catch (const std::out_of_range &)
   {
     std::stringstream stm;
     stm << "radius [" << c->Attribute("radius") << "] is out of range";
@@ -229,7 +229,7 @@ bool parseMesh(Mesh &m, TiXmlElement *c)
     try {
       m.scale.init(c->Attribute("scale"));
     }
-    catch (ParseError &e) {
+    catch (const ParseError & e) {
       m.scale.clear();
       CONSOLE_BRIDGE_logError("Mesh scale was specified, but could not be parsed: %s", e.what());
       return false;
@@ -320,7 +320,7 @@ bool parseInertial(Inertial &i, TiXmlElement *config)
   {
     i.mass = std::stod(mass_xml->Attribute("value"));
   }
-  catch (std::invalid_argument &/*e*/)
+  catch (const std::invalid_argument &)
   {
     std::stringstream stm;
     stm << "Inertial: mass [" << mass_xml->Attribute("value")
@@ -328,7 +328,7 @@ bool parseInertial(Inertial &i, TiXmlElement *config)
     CONSOLE_BRIDGE_logError(stm.str().c_str());
     return false;
   }
-  catch (std::out_of_range &/*e*/)
+  catch (const std::out_of_range &)
   {
     std::stringstream stm;
     stm << "Inertial: mass [" << mass_xml->Attribute("value")
@@ -359,7 +359,7 @@ bool parseInertial(Inertial &i, TiXmlElement *config)
     i.iyz  = std::stod(inertia_xml->Attribute("iyz"));
     i.izz  = std::stod(inertia_xml->Attribute("izz"));
   }
-  catch (std::invalid_argument &/*e*/)
+  catch (const std::invalid_argument &)
   {
     std::stringstream stm;
     stm << "Inertial: one of the inertia elements is not a valid double:"
@@ -372,7 +372,7 @@ bool parseInertial(Inertial &i, TiXmlElement *config)
     CONSOLE_BRIDGE_logError(stm.str().c_str());
     return false;
   }
-  catch (std::out_of_range &/*e*/)
+  catch (const std::out_of_range &)
   {
     std::stringstream stm;
     stm << "Inertial: one of the inertia elements is out of range:"

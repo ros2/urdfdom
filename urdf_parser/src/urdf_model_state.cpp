@@ -67,11 +67,11 @@ bool parseModelState(ModelState &ms, TiXmlElement* config)
       double sec = std::stod(time_stamp_char);
       ms.time_stamp.set(sec);
     }
-    catch (std::invalid_argument &e) {
+    catch (const std::invalid_argument & e) {
       CONSOLE_BRIDGE_logError("Parsing time stamp [%s] failed: %s", time_stamp_char, e.what());
       return false;
     }
-    catch (std::out_of_range &e) {
+    catch (const std::out_of_range & e) {
       CONSOLE_BRIDGE_logError("Parsing time stamp [%s] failed, out of range: %s", time_stamp_char, e.what());
       return false;
     }
@@ -104,10 +104,10 @@ bool parseModelState(ModelState &ms, TiXmlElement* config)
           try {
             joint_state->position.push_back(std::stod(pieces[i].c_str()));
           }
-          catch (std::invalid_argument &/*e*/) {
+          catch (const std::invalid_argument &) {
             throw ParseError("position element ("+ pieces[i] +") is not a valid float");
           }
-          catch (std::out_of_range &/*e*/) {
+          catch (const std::out_of_range &) {
             throw ParseError("position element ("+ pieces[i] +") is out of range");
           }
         }
@@ -126,10 +126,10 @@ bool parseModelState(ModelState &ms, TiXmlElement* config)
           try {
             joint_state->velocity.push_back(std::stod(pieces[i].c_str()));
           }
-          catch (std::invalid_argument &/*e*/) {
+          catch (const std::invalid_argument &) {
             throw ParseError("velocity element ("+ pieces[i] +") is not a valid float");
           }
-          catch (std::out_of_range &/*e*/) {
+          catch (const std::out_of_range &) {
             throw ParseError("velocity element ("+ pieces[i] +") is out of range");
           }
         }
@@ -148,10 +148,10 @@ bool parseModelState(ModelState &ms, TiXmlElement* config)
           try {
             joint_state->effort.push_back(std::stod(pieces[i].c_str()));
           }
-          catch (std::invalid_argument &/*e*/) {
+          catch (const std::invalid_argument &) {
             throw ParseError("effort element ("+ pieces[i] +") is not a valid float");
           }
-          catch (std::out_of_range &/*e*/) {
+          catch (const std::out_of_range &) {
             throw ParseError("effort element ("+ pieces[i] +") is out of range");
           }
         }
