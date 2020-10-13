@@ -37,55 +37,53 @@
 #include "urdf_parser/urdf_parser.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
-using namespace urdf;
-using namespace std;
-
-void addChildLinkNames(LinkConstSharedPtr link, ofstream& os)
+void addChildLinkNames(urdf::LinkConstSharedPtr link, std::ofstream & os)
 {
-  os << "\"" << link->name << "\" [label=\"" << link->name << "\"];" << endl;
-  for (std::vector<LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+  os << "\"" << link->name << "\" [label=\"" << link->name << "\"];" << std::endl;
+  for (std::vector<urdf::LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+  {
     addChildLinkNames(*child, os);
+  }
 }
 
-void addChildJointNames(LinkConstSharedPtr link, ofstream& os)
+void addChildJointNames(urdf::LinkConstSharedPtr link, std::ofstream & os)
 {
   double r, p, y;
-  for (std::vector<LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++){
+  for (std::vector<urdf::LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+  {
     (*child)->parent_joint->parent_to_joint_origin_transform.rotation.getRPY(r,p,y);
-    os << "\"" << link->name << "\" -> \"" << (*child)->parent_joint->name 
+    os << "\"" << link->name << "\" -> \"" << (*child)->parent_joint->name
        << "\" [label=\"xyz: "
-       << (*child)->parent_joint->parent_to_joint_origin_transform.position.x << " " 
-       << (*child)->parent_joint->parent_to_joint_origin_transform.position.y << " " 
-       << (*child)->parent_joint->parent_to_joint_origin_transform.position.z << " " 
-       << "\\nrpy: " << r << " " << p << " " << y << "\"]" << endl;
-    os << "\"" << (*child)->parent_joint->name << "\" -> \"" << (*child)->name << "\"" << endl;
+       << (*child)->parent_joint->parent_to_joint_origin_transform.position.x << " "
+       << (*child)->parent_joint->parent_to_joint_origin_transform.position.y << " "
+       << (*child)->parent_joint->parent_to_joint_origin_transform.position.z << " "
+       << "\\nrpy: " << r << " " << p << " " << y << "\"]" << std::endl;
+    os << "\"" << (*child)->parent_joint->name << "\" -> \"" << (*child)->name << "\"" << std::endl;
     addChildJointNames(*child, os);
   }
 }
 
-
-void printTree(LinkConstSharedPtr link, string file)
+void printTree(urdf::LinkConstSharedPtr link, std::string file)
 {
   std::ofstream os;
   os.open(file.c_str());
-  os << "digraph G {" << endl;
+  os << "digraph G {" << std::endl;
 
-  os << "node [shape=box];" << endl;
+  os << "node [shape=box];" << std::endl;
   addChildLinkNames(link, os);
 
-  os << "node [shape=ellipse, color=blue, fontcolor=blue];" << endl;
+  os << "node [shape=ellipse, color=blue, fontcolor=blue];" << std::endl;
   addChildJointNames(link, os);
 
-  os << "}" << endl;
+  os << "}" << std::endl;
   os.close();
 }
 
-
-
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
-  if (argc != 2){
+  if (argc != 2) {
     std::cerr << "Usage: urdf_to_graphiz input.xml" << std::endl;
     return -1;
   }
@@ -93,30 +91,29 @@ int main(int argc, char** argv)
   // get the entire file
   std::string xml_string;
   std::fstream xml_file(argv[1], std::fstream::in);
-  while ( xml_file.good() )
-  {
+  while (xml_file.good()) {
     std::string line;
     std::getline( xml_file, line);
     xml_string += (line + "\n");
   }
   xml_file.close();
 
-  ModelInterfaceSharedPtr robot = parseURDF(xml_string);
-  if (!robot){
+  urdf::ModelInterfaceSharedPtr robot = urdf::parseURDF(xml_string);
+  if (!robot) {
     std::cerr << "ERROR: Model Parsing the xml failed" << std::endl;
     return -1;
   }
-  string output = robot->getName();
+  std::string output = robot->getName();
 
   // print entire tree to file
   printTree(robot->getRoot(), output+".gv");
-  cout << "Created file " << output << ".gv" << endl;
+  std::cout << "Created file " << output << ".gv" << std::endl;
 
-  string command = "dot -Tpdf "+output+".gv  -o "+output+".pdf";
-  if (system(command.c_str()) != -1)
-    cout << "Created file " << output << ".pdf" << endl;
-  else
-    cout << "There was an error executing '" << command << "'" << endl;
+  std::string command = "dot -Tpdf "+output+".gv  -o "+output+".pdf";
+  if (system(command.c_str()) != -1) {
+    std::cout << "Created file " << output << ".pdf" << std::endl;
+  } else {
+    std::cout << "There was an error executing '" << command << "'" << std::endl;
+  }
   return 0;
 }
-
