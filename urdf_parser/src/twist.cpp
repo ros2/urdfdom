@@ -35,12 +35,9 @@
 /* Author: John Hsu */
 
 
-#include <urdf_model/twist.h>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
-#include <tinyxml.h>
 #include <console_bridge/console.h>
+#include <tinyxml.h>
+#include <urdf_model/twist.h>
 
 namespace urdf{
 

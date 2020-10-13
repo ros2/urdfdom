@@ -34,18 +34,17 @@
 
 /* Author: John Hsu */
 
-
-#include <urdf_model_state/model_state.h>
-#include <urdf_model/utils.h>
-#include <fstream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <algorithm>
-#include <tinyxml.h>
-#include <console_bridge/console.h>
+#include <vector>
 
+#include <console_bridge/console.h>
+#include <tinyxml.h>
+#include <urdf_exception/exception.h>
+#include <urdf_model_state/model_state.h>
+#include <urdf_model/utils.h>
 #include <urdf_parser/urdf_parser.h>
+
 namespace urdf{
 
 bool parseModelState(ModelState &ms, TiXmlElement* config)

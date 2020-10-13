@@ -34,15 +34,9 @@
 
 /* Author: Wim Meeussen */
 
-
-#include <urdf_world/world.h>
-#include <urdf_model/model.h>
-#include <urdf_parser/urdf_parser.h>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
 #include <tinyxml.h>
-#include <console_bridge/console.h>
+#include <urdf_parser/urdf_parser.h>
+#include <urdf_world/world.h>
 
 namespace urdf{
 

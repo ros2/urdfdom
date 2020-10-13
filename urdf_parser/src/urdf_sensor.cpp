@@ -34,17 +34,13 @@
 
 /* Author: John Hsu */
 
-
-#include <urdf_sensor/sensor.h>
-#include <fstream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <algorithm>
-#include <tinyxml.h>
-#include <console_bridge/console.h>
 
+#include <console_bridge/console.h>
+#include <tinyxml.h>
 #include <urdf_parser/urdf_parser.h>
+#include <urdf_sensor/sensor.h>
 
 namespace urdf{
 

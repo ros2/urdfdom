@@ -34,12 +34,13 @@
 
 /* Author: John Hsu */
 
-#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <urdf_model/joint.h>
+
 #include <console_bridge/console.h>
 #include <tinyxml.h>
+#include <urdf_exception/exception.h>
+#include <urdf_model/joint.h>
 #include <urdf_parser/urdf_parser.h>
 
 namespace urdf{

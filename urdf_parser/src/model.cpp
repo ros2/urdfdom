@@ -34,10 +34,15 @@
 
 /* Author: Wim Meeussen */
 
-#include <vector>
-#include "urdf_parser/urdf_parser.h"
-#include <console_bridge/console.h>
 #include <fstream>
+#include <map>
+#include <string>
+
+#include <console_bridge/console.h>
+#include <tinyxml.h>
+#include <urdf_exception/exception.h>
+#include <urdf_parser/urdf_parser.h>
+#include <urdf_world/types.h>
 
 namespace urdf{
 
