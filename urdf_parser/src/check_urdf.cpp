@@ -38,25 +38,26 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
 
-using namespace urdf;
-
-void printTree(LinkConstSharedPtr link,int level = 0)
+void printTree(urdf::LinkConstSharedPtr link, int level = 0)
 {
   level += 2;
   int count = 0;
-  for (std::vector<LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
+  for (std::vector<urdf::LinkSharedPtr>::const_iterator child = link->child_links.begin(); child != link->child_links.end(); child++)
   {
-    if (*child)
-    {
-      for(int j=0;j<level;j++) std::cout << "  "; //indent
-      std::cout << "child(" << (count++)+1 << "):  " << (*child)->name  << std::endl;
+    if (*child) {
+      for(int j = 0; j < level; j++) {
+        std::cout << "  ";  // indent
+      }
+      std::cout << "child(" << (count++) + 1 << "):  " << (*child)->name << std::endl;
       // first grandchild
-      printTree(*child,level);
-    }
-    else
-    {
-      for(int j=0;j<level;j++) std::cout << " "; //indent
+      printTree(*child, level);
+    } else {
+      for(int j = 0; j < level; j++) {
+        std::cout << " ";  // indent
+      }
       std::cout << "root link: " << link->name << " has a null child!" << *child << std::endl;
     }
   }
@@ -64,9 +65,9 @@ void printTree(LinkConstSharedPtr link,int level = 0)
 
 int main(int argc, char** argv)
 {
-  if (argc < 2){
-    std::cerr << "Expect URDF xml file to parse" << std::endl;
-    return -1;
+  if (argc != 2) {
+    std::cerr << "Expected URDF xml file to parse" << std::endl;
+    return 1;
   }
 
   std::string xml_string;
@@ -78,18 +79,20 @@ int main(int argc, char** argv)
   }
   xml_file.close();
 
-  ModelInterfaceSharedPtr robot = parseURDF(xml_string);
-  if (!robot){
+  urdf::ModelInterfaceSharedPtr robot = urdf::parseURDF(xml_string);
+  if (!robot) {
     std::cerr << "ERROR: Model Parsing the xml failed" << std::endl;
-    return -1;
+    return 1;
   }
   std::cout << "robot name is: " << robot->getName() << std::endl;
 
   // get info from parser
   std::cout << "---------- Successfully Parsed XML ---------------" << std::endl;
   // get root link
-  LinkConstSharedPtr root_link=robot->getRoot();
-  if (!root_link) return -1;
+  urdf::LinkConstSharedPtr root_link = robot->getRoot();
+  if (!root_link) {
+    return 1;
+  }
 
   std::cout << "root Link: " << root_link->name << " has " << root_link->child_links.size() << " child(ren)" << std::endl;
 
