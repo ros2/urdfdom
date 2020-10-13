@@ -36,12 +36,12 @@
 #define URDF_PARSER_JOINT_HPP
 
 #include <urdf_model/joint.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 namespace urdf
 {
-bool parseJoint(Joint & joint, TiXmlElement * config);
-bool exportJoint(Joint & joint, TiXmlElement * xml);
+bool parseJoint(Joint & joint, tinyxml2::XMLElement * config);
+bool exportJoint(Joint & joint, tinyxml2::XMLElement * xml);
 }  // namespace urdf
 
 #endif  // URDF_PARSER_JOINT_HPP

@@ -6,13 +6,13 @@ add_library(urdfdom_world SHARED
   src/joint.cpp
   src/world.cpp)
 target_include_directories(urdfdom_world PUBLIC
-  ${TinyXML_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_world PUBLIC
   console_bridge::console_bridge
   urdfdom_headers::urdfdom_headers
-  ${TinyXML_LIBRARIES})
+  ${TinyXML2_LIBRARIES})
 set_target_properties(urdfdom_world PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 
 add_library(urdfdom_model SHARED
@@ -22,38 +22,38 @@ add_library(urdfdom_model SHARED
   src/link.cpp
   src/joint.cpp)
 target_include_directories(urdfdom_model PUBLIC
-  ${TinyXML_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_model PUBLIC
   console_bridge::console_bridge
   urdfdom_headers::urdfdom_headers
-  ${TinyXML_LIBRARIES})
+  ${TinyXML2_LIBRARIES})
 set_target_properties(urdfdom_model PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 
 add_library(urdfdom_sensor SHARED src/urdf_sensor.cpp)
 target_include_directories(urdfdom_sensor PUBLIC
-  ${TinyXML_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_sensor PUBLIC
   urdfdom_model
   console_bridge::console_bridge
   urdfdom_headers::urdfdom_headers
-  ${TinyXML_LIBRARIES})
+  ${TinyXML2_LIBRARIES})
 set_target_properties(urdfdom_sensor PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 
 add_library(urdfdom_model_state SHARED
   src/urdf_model_state.cpp
   src/twist.cpp)
 target_include_directories(urdfdom_model_state PUBLIC
-  ${TinyXML_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>")
 target_link_libraries(urdfdom_model_state
   console_bridge::console_bridge
   urdfdom_headers::urdfdom_headers
-  ${TinyXML_LIBRARIES})
+  ${TinyXML2_LIBRARIES})
 set_target_properties(urdfdom_model_state PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 
 # --------------------------------

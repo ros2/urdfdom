@@ -35,14 +35,14 @@
 #ifndef URDF_PARSER_POSE_HPP
 #define URDF_PARSER_POSE_HPP
 
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include <urdf_model/pose.h>
 
 namespace urdf
 {
-bool parsePose(Pose & pose, TiXmlElement * xml);
-bool exportPose(Pose & pose, TiXmlElement * xml);
+bool parsePose(Pose & pose, tinyxml2::XMLElement * xml);
+bool exportPose(Pose & pose, tinyxml2::XMLElement * xml);
 }  // namespace urdf
 
 #endif  // URDF_PARSER_POSE_HPP

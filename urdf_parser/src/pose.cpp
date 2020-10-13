@@ -37,7 +37,7 @@
 #include <string>
 
 #include <console_bridge/console.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_exception/exception.h>
 #include <urdf_model/pose.h>
 #include <urdf_parser/urdf_parser.h>
@@ -47,7 +47,7 @@
 namespace urdf
 {
 
-bool parsePose(Pose & pose, TiXmlElement * xml)
+bool parsePose(Pose & pose, tinyxml2::XMLElement * xml)
 {
   pose.clear();
   if (xml) {
@@ -74,13 +74,13 @@ bool parsePose(Pose & pose, TiXmlElement * xml)
   return true;
 }
 
-bool exportPose(Pose & pose, TiXmlElement * xml)
+bool exportPose(Pose & pose, tinyxml2::XMLElement * xml)
 {
-  TiXmlElement * origin = new TiXmlElement("origin");
+  tinyxml2::XMLElement * origin = xml->GetDocument()->NewElement("origin");
   std::string pose_xyz_str = urdf_export_helpers::values2str(pose.position);
   std::string pose_rpy_str = urdf_export_helpers::values2str(pose.rotation);
-  origin->SetAttribute("xyz", pose_xyz_str);
-  origin->SetAttribute("rpy", pose_rpy_str);
+  origin->SetAttribute("xyz", pose_xyz_str.c_str());
+  origin->SetAttribute("rpy", pose_rpy_str.c_str());
   xml->LinkEndChild(origin);
   return true;
 }

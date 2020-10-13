@@ -39,7 +39,7 @@
 #include <vector>
 
 #include <console_bridge/console.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_exception/exception.h>
 #include <urdf_model_state/model_state.h>
 #include <urdf_model/utils.h>
@@ -48,7 +48,7 @@
 namespace urdf
 {
 
-bool parseModelState(ModelState & ms, TiXmlElement * config)
+bool parseModelState(ModelState & ms, tinyxml2::XMLElement * config)
 {
   ms.clear();
 
@@ -73,7 +73,7 @@ bool parseModelState(ModelState & ms, TiXmlElement * config)
     }
   }
 
-  TiXmlElement *joint_state_elem = config->FirstChildElement("joint_state");
+  tinyxml2::XMLElement *joint_state_elem = config->FirstChildElement("joint_state");
   if (joint_state_elem) {
     JointStateSharedPtr joint_state;
     joint_state.reset(new JointState());

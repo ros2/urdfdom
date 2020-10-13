@@ -34,24 +34,24 @@
 
 /* Author: Wim Meeussen */
 
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_world/world.h>
 
 namespace urdf
 {
 
-bool parseWorld(World &, TiXmlElement *)
+bool parseWorld(World &, tinyxml2::XMLElement *)
 {
   // to be implemented
 
   return true;
 }
 
-bool exportWorld(World & world, TiXmlElement * xml)
+bool exportWorld(World & world, tinyxml2::XMLElement * xml)
 {
-  TiXmlElement * world_xml = new TiXmlElement("world");
-  world_xml->SetAttribute("name", world.name);
+  tinyxml2::XMLElement * world_xml = xml->GetDocument()->NewElement("world");
+  world_xml->SetAttribute("name", world.name.c_str());
 
   // to be implemented
   // exportModels(*world.models, world_xml);

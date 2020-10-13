@@ -35,14 +35,14 @@
 /* Author: John Hsu */
 
 #include <console_bridge/console.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_exception/exception.h>
 #include <urdf_model/twist.h>
 
 namespace urdf
 {
 
-bool parseTwist(Twist & twist, TiXmlElement * xml)
+bool parseTwist(Twist & twist, tinyxml2::XMLElement * xml)
 {
   twist.clear();
   if (xml) {

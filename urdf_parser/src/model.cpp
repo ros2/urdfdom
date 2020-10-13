@@ -39,7 +39,7 @@
 #include <string>
 
 #include <console_bridge/console.h>
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_exception/exception.h>
 #include <urdf_model/model.h>
 #include <urdf_parser/urdf_parser.h>
@@ -69,16 +69,15 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
   ModelInterfaceSharedPtr model(new ModelInterface);
   model->clear();
 
-  TiXmlDocument xml_doc;
-  xml_doc.Parse(xml_string.c_str());
-  if (xml_doc.Error()) {
-    CONSOLE_BRIDGE_logError(xml_doc.ErrorDesc());
+  tinyxml2::XMLDocument xml_doc;
+  if (xml_doc.Parse(xml_string.c_str()) != tinyxml2::XML_SUCCESS) {
+    CONSOLE_BRIDGE_logError(xml_doc.ErrorStr());
     xml_doc.ClearError();
     model.reset();
     return model;
   }
 
-  TiXmlElement * robot_xml = xml_doc.FirstChildElement("robot");
+  tinyxml2::XMLElement * robot_xml = xml_doc.FirstChildElement("robot");
   if (!robot_xml) {
     CONSOLE_BRIDGE_logError("Could not find the 'robot' element in the xml file");
     model.reset();
@@ -95,7 +94,7 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
   model->name_ = std::string(name);
 
   // Get all Material elements
-  for (TiXmlElement * material_xml = robot_xml->FirstChildElement("material"); material_xml; material_xml = material_xml->NextSiblingElement("material"))
+  for (tinyxml2::XMLElement * material_xml = robot_xml->FirstChildElement("material"); material_xml; material_xml = material_xml->NextSiblingElement("material"))
   {
     MaterialSharedPtr material;
     material.reset(new Material);
@@ -120,7 +119,7 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
   }
 
   // Get all Link elements
-  for (TiXmlElement * link_xml = robot_xml->FirstChildElement("link"); link_xml; link_xml = link_xml->NextSiblingElement("link"))
+  for (tinyxml2::XMLElement * link_xml = robot_xml->FirstChildElement("link"); link_xml; link_xml = link_xml->NextSiblingElement("link"))
   {
     LinkSharedPtr link;
     link.reset(new Link);
@@ -168,7 +167,7 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
   }
 
   // Get all Joint elements
-  for (TiXmlElement * joint_xml = robot_xml->FirstChildElement("joint"); joint_xml; joint_xml = joint_xml->NextSiblingElement("joint"))
+  for (tinyxml2::XMLElement * joint_xml = robot_xml->FirstChildElement("joint"); joint_xml; joint_xml = joint_xml->NextSiblingElement("joint"))
   {
     JointSharedPtr joint;
     joint.reset(new Joint);
@@ -216,12 +215,12 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
   return model;
 }
 
-TiXmlDocument * exportURDF(const ModelInterface & model)
+tinyxml2::XMLDocument * exportURDF(const ModelInterface & model)
 {
-  TiXmlDocument * doc = new TiXmlDocument();
+  tinyxml2::XMLDocument * doc = new tinyxml2::XMLDocument();
 
-  TiXmlElement * robot = new TiXmlElement("robot");
-  robot->SetAttribute("name", model.name_);
+  tinyxml2::XMLElement * robot = doc->NewElement("robot");
+  robot->SetAttribute("name", model.name_.c_str());
   doc->LinkEndChild(robot);
 
   for (std::map<std::string, MaterialSharedPtr>::const_iterator m = model.materials_.begin(); m != model.materials_.end(); m++)
@@ -245,7 +244,7 @@ TiXmlDocument * exportURDF(const ModelInterface & model)
   return doc;
 }
 
-TiXmlDocument * exportURDF(ModelInterfaceSharedPtr & model)
+tinyxml2::XMLDocument * exportURDF(ModelInterfaceSharedPtr & model)
 {
   return exportURDF(*model);
 }

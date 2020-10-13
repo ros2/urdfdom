@@ -35,15 +35,15 @@
 #ifndef URDF_PARSER_LINK_HPP
 #define URDF_PARSER_LINK_HPP
 
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <urdf_model/link.h>
 
 namespace urdf
 {
-bool parseMaterial(Material & material, TiXmlElement * config, bool only_name_is_ok);
-bool parseLink(Link & link, TiXmlElement * config);
-bool exportMaterial(Material & material, TiXmlElement * xml);
-bool exportLink(Link & link, TiXmlElement * xml);
+bool parseMaterial(Material & material, tinyxml2::XMLElement * config, bool only_name_is_ok);
+bool parseLink(Link & link, tinyxml2::XMLElement * config);
+bool exportMaterial(Material & material, tinyxml2::XMLElement * xml);
+bool exportLink(Link & link, tinyxml2::XMLElement * xml);
 }
 
 #endif  // URDF_PARSER_LINK_HPP
