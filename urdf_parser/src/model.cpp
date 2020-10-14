@@ -41,6 +41,7 @@
 #include <console_bridge/console.h>
 #include <tinyxml.h>
 #include <urdf_exception/exception.h>
+#include <urdf_model/model.h>
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_world/types.h>
 
