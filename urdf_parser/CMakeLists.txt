@@ -66,11 +66,6 @@ add_executable(urdf_to_graphiz src/urdf_to_graphiz.cpp)
 target_include_directories(urdf_to_graphiz PUBLIC include)
 target_link_libraries(urdf_to_graphiz urdfdom_model)
 
-# urdf_mem_test is a binary for testing, not a unit test
-add_executable(urdf_mem_test test/memtest.cpp)
-target_include_directories(urdf_mem_test PUBLIC include)
-target_link_libraries(urdf_mem_test urdfdom_model)
-
 include(CTest)
 if(BUILD_TESTING)
   add_subdirectory(test)
@@ -80,7 +75,6 @@ INSTALL(
   TARGETS
   check_urdf
   urdf_to_graphiz
-  urdf_mem_test
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
