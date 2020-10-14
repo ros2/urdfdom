@@ -34,8 +34,8 @@
 
 /* Author: Thomas Moulard */
 
-#ifndef URDFDOM_EXPORTDECL_H
-# define URDFDOM_EXPORTDECL_H
+#ifndef URDF_PARSER_EXPORTDECL_H
+#define URDF_PARSER_EXPORTDECL_H
 
 // Handle portable symbol export.
 // Defining manually which symbol should be exported is required
@@ -81,4 +81,5 @@
 #  endif // URDFDOM_EXPORTS
 #  define URDFDOM_LOCAL URDFDOM_DLLLOCAL
 # endif // URDFDOM_STATIC
-#endif //! URDFDOM_EXPORTDECL_H
+
+#endif  // URDF_PARSER_EXPORTDECL_H
