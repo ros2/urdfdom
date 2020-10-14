@@ -44,12 +44,11 @@
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_world/types.h>
 
+#include "./joint.hpp"
 #include "./link.hpp"
 
 namespace urdf
 {
-
-bool parseJoint(Joint & joint, TiXmlElement * config);
 
 ModelInterfaceSharedPtr parseURDFFile(const std::string & path)
 {
@@ -215,8 +214,6 @@ ModelInterfaceSharedPtr parseURDF(const std::string & xml_string)
 
   return model;
 }
-
-bool exportJoint(Joint & joint, TiXmlElement * config);
 
 TiXmlDocument * exportURDF(const ModelInterface & model)
 {
