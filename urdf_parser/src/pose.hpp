@@ -32,32 +32,17 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Wim Meeussen */
+#ifndef URDF_PARSER_POSE_HPP
+#define URDF_PARSER_POSE_HPP
 
-#ifndef URDF_PARSER_URDF_PARSER_H
-#define URDF_PARSER_URDF_PARSER_H
-
-#include <string>
-#include <map>
 #include <tinyxml.h>
-#include <urdf_model/model.h>
-#include <urdf_model/color.h>
-#include <urdf_world/types.h>
-#include <urdf_sensor/sensor.h>
-#include <urdf_model_state/model_state.h>
 
-#include "exportdecl.h"
+#include <urdf_model/pose.h>
 
-namespace urdf{
+namespace urdf
+{
+bool parsePose(Pose & pose, TiXmlElement * xml);
+bool exportPose(Pose & pose, TiXmlElement * xml);
+}  // namespace urdf
 
-  URDFDOM_DLLAPI ModelInterfaceSharedPtr parseURDF(const std::string &xml_string);
-  URDFDOM_DLLAPI ModelInterfaceSharedPtr parseURDFFile(const std::string &path);
-  URDFDOM_DLLAPI TiXmlDocument*  exportURDF(ModelInterfaceSharedPtr &model);
-  URDFDOM_DLLAPI TiXmlDocument*  exportURDF(const ModelInterface &model);
-  URDFDOM_DLLAPI bool parseCamera(Camera&, TiXmlElement*);
-  URDFDOM_DLLAPI bool parseRay(Ray&, TiXmlElement*);
-  URDFDOM_DLLAPI bool parseSensor(Sensor&, TiXmlElement*);
-  URDFDOM_DLLAPI bool parseModelState(ModelState&, TiXmlElement*);
-}
-
-#endif
+#endif  // URDF_PARSER_POSE_HPP

@@ -45,6 +45,7 @@
 #include <urdf_parser/urdf_parser.h>
 
 #include "./export_helpers.hpp"
+#include "./pose.hpp"
 
 namespace urdf
 {
@@ -478,8 +479,6 @@ bool parseLink(Link & link, TiXmlElement * config)
 }
 
 /* exports */
-bool exportPose(Pose & pose, TiXmlElement * xml);
-
 bool exportMaterial(Material & material, TiXmlElement * xml)
 {
   TiXmlElement * material_xml = new TiXmlElement("material");

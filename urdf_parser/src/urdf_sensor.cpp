@@ -42,6 +42,8 @@
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_sensor/sensor.h>
 
+#include "./pose.hpp"
+
 namespace urdf
 {
 

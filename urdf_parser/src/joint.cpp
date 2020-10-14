@@ -44,11 +44,10 @@
 #include <urdf_parser/urdf_parser.h>
 
 #include "./export_helpers.hpp"
+#include "./pose.hpp"
 
 namespace urdf
 {
-
-bool parsePose(Pose & pose, TiXmlElement * xml);
 
 bool parseJointDynamics(JointDynamics & jd, TiXmlElement * config)
 {
@@ -497,8 +496,6 @@ bool parseJoint(Joint & joint, TiXmlElement * config)
 }
 
 /* exports */
-bool exportPose(Pose & pose, TiXmlElement * xml);
-
 bool exportJointDynamics(JointDynamics & jd, TiXmlElement * xml)
 {
   TiXmlElement * dynamics_xml = new TiXmlElement("dynamics");
