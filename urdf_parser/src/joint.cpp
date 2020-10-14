@@ -43,6 +43,8 @@
 #include <urdf_model/joint.h>
 #include <urdf_parser/urdf_parser.h>
 
+#include "./export_helpers.hpp"
+
 namespace urdf
 {
 

@@ -1,4 +1,5 @@
 add_library(urdfdom_world SHARED
+  src/export_helpers.cpp
   src/pose.cpp
   src/model.cpp
   src/link.cpp
@@ -15,6 +16,7 @@ target_link_libraries(urdfdom_world PUBLIC
 set_target_properties(urdfdom_world PROPERTIES SOVERSION ${URDF_MAJOR_MINOR_VERSION})
 
 add_library(urdfdom_model SHARED
+  src/export_helpers.cpp
   src/pose.cpp
   src/model.cpp
   src/link.cpp

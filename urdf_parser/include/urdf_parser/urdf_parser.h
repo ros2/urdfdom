@@ -48,16 +48,6 @@
 
 #include "exportdecl.h"
 
-namespace urdf_export_helpers {
-
-URDFDOM_DLLAPI std::string values2str(unsigned int count, const double *values, double (*conv)(double) = nullptr);
-URDFDOM_DLLAPI std::string values2str(urdf::Vector3 vec);
-URDFDOM_DLLAPI std::string values2str(urdf::Rotation rot);
-URDFDOM_DLLAPI std::string values2str(urdf::Color c);
-URDFDOM_DLLAPI std::string values2str(double d);
-
-}
-
 namespace urdf{
 
   URDFDOM_DLLAPI ModelInterfaceSharedPtr parseURDF(const std::string &xml_string);

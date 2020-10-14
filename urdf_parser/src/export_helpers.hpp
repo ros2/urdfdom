@@ -32,57 +32,21 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 *********************************************************************/
 
-/* Author: Wim Meeussen, John Hsu */
+#ifndef URDF_PARSER_EXPORT_HELPERS_HPP
+#define URDF_PARSER_EXPORT_HELPERS_HPP
 
 #include <string>
 
-#include <console_bridge/console.h>
-#include <tinyxml.h>
-#include <urdf_exception/exception.h>
+#include <urdf_model/color.h>
 #include <urdf_model/pose.h>
-#include <urdf_parser/urdf_parser.h>
 
-#include "./export_helpers.hpp"
-
-namespace urdf
+namespace urdf_export_helpers
 {
+std::string values2str(unsigned int count, const double * values, double (*conv)(double) = nullptr);
+std::string values2str(urdf::Vector3 vec);
+std::string values2str(urdf::Rotation rot);
+std::string values2str(urdf::Color c);
+std::string values2str(double d);
+}  // namespace urdf_export_helpers
 
-bool parsePose(Pose & pose, TiXmlElement * xml)
-{
-  pose.clear();
-  if (xml) {
-    const char * xyz_str = xml->Attribute("xyz");
-    if (xyz_str != nullptr) {
-      try {
-        pose.position.init(xyz_str);
-      } catch (const ParseError & e) {
-        CONSOLE_BRIDGE_logError(e.what());
-        return false;
-      }
-    }
-
-    const char * rpy_str = xml->Attribute("rpy");
-    if (rpy_str != nullptr) {
-      try {
-        pose.rotation.init(rpy_str);
-      } catch (const ParseError & e) {
-        CONSOLE_BRIDGE_logError(e.what());
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-bool exportPose(Pose & pose, TiXmlElement * xml)
-{
-  TiXmlElement * origin = new TiXmlElement("origin");
-  std::string pose_xyz_str = urdf_export_helpers::values2str(pose.position);
-  std::string pose_rpy_str = urdf_export_helpers::values2str(pose.rotation);
-  origin->SetAttribute("xyz", pose_xyz_str);
-  origin->SetAttribute("rpy", pose_rpy_str);
-  xml->LinkEndChild(origin);
-  return true;
-}
-
-}  // namespace urdf
+#endif  // URDF_PARSER_EXPORT_HELPERS_HPP
