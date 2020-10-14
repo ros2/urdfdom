@@ -9,7 +9,7 @@
 # define M_PI 3.141592653589793
 #endif
 
-bool quat_are_near(urdf::Rotation left, urdf::Rotation right)
+bool quat_are_near(const urdf::Rotation & left, const urdf::Rotation & right)
 {
   static const double epsilon = 1e-3; // quite loose epsilon
   double l[4], r[4];
@@ -37,7 +37,6 @@ std::ostream &operator<<(std::ostream &os, const urdf::Rotation& rot)
   return os;
 }
 
-
 void check_get_set_rpy_is_idempotent(double x, double y, double z, double w)
 {
   urdf::Rotation rot0;
@@ -46,12 +45,10 @@ void check_get_set_rpy_is_idempotent(double x, double y, double z, double w)
   rot0.getRPY(roll, pitch, yaw);
   urdf::Rotation rot1;
   rot1.setFromRPY(roll, pitch, yaw);
-  if (true) {
-    std::cout << "\n"
-              << "before  " << rot0 << "\n"
-              << "after   " << rot1 << "\n"
-              << "ok      " << quat_are_near(rot0, rot1) << "\n";
-  }
+  std::cout << "\n"
+            << "before  " << rot0 << "\n"
+            << "after   " << rot1 << "\n"
+            << "ok      " << quat_are_near(rot0, rot1) << "\n";
   EXPECT_TRUE(quat_are_near(rot0, rot1));
 }
 
@@ -83,7 +80,6 @@ TEST(URDF_UNIT_TEST, test_rotation_get_set_rpy_idempotent)
   // Checking consistency (in quaternion space) of set/get rpy
   check_get_set_rpy_is_idempotent_from_rpy(0.0,-M_PI/2,0.0);
 
-
   // More complete consistency check of set/get rpy
   // We define a list of angles (some totally random,
   // some instead are cornercase such as 0.0 or M_PI).
@@ -106,16 +102,13 @@ TEST(URDF_UNIT_TEST, test_rotation_get_set_rpy_idempotent)
   testAngles.push_back(-1.5);
   testAngles.push_back(-2.0);
 
-  for(size_t rIdx = 0; rIdx < testAngles.size(); rIdx++ ) {
-    for(size_t pIdx = 0; pIdx < testAngles.size(); pIdx++ ) {
-      for(size_t yIdx = 0; yIdx < testAngles.size(); yIdx++ ) {
-            check_get_set_rpy_is_idempotent_from_rpy(testAngles[rIdx],
-                                                     testAngles[pIdx],
-                                                     testAngles[yIdx]);
+  for (size_t rIdx = 0; rIdx < testAngles.size(); rIdx++) {
+    for (size_t pIdx = 0; pIdx < testAngles.size(); pIdx++) {
+      for (size_t yIdx = 0; yIdx < testAngles.size(); yIdx++) {
+        check_get_set_rpy_is_idempotent_from_rpy(testAngles[rIdx],
+                                                 testAngles[pIdx],
+                                                 testAngles[yIdx]);
       }
     }
   }
-
-
-
 }
