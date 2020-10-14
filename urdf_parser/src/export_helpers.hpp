@@ -43,9 +43,9 @@
 namespace urdf_export_helpers
 {
 std::string values2str(unsigned int count, const double * values, double (*conv)(double) = nullptr);
-std::string values2str(urdf::Vector3 vec);
-std::string values2str(urdf::Rotation rot);
-std::string values2str(urdf::Color c);
+std::string values2str(const urdf::Vector3 & vec);
+std::string values2str(const urdf::Rotation & rot);
+std::string values2str(const urdf::Color & c);
 std::string values2str(double d);
 }  // namespace urdf_export_helpers
 

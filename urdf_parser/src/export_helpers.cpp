@@ -55,7 +55,7 @@ std::string values2str(unsigned int count, const double * values, double (*conv)
   return ss.str();
 }
 
-std::string values2str(urdf::Vector3 vec)
+std::string values2str(const urdf::Vector3 & vec)
 {
   double xyz[3];
   xyz[0] = vec.x;
@@ -64,14 +64,14 @@ std::string values2str(urdf::Vector3 vec)
   return values2str(3, xyz);
 }
 
-std::string values2str(urdf::Rotation rot)
+std::string values2str(const urdf::Rotation & rot)
 {
   double rpy[3];
   rot.getRPY(rpy[0], rpy[1], rpy[2]);
   return values2str(3, rpy);
 }
 
-std::string values2str(urdf::Color c)
+std::string values2str(const urdf::Color & c)
 {
   double rgba[4];
   rgba[0] = c.r;
